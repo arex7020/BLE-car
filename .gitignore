@@ -1,55 +1,48 @@
-# Prerequisites
-*.d
+# Build artifacts
+/build/
+/CMakeCache.txt
+/CMakeFiles/
+/Makefile
+/compile_commands.json
+/compile_commands.json.tmp
+/esp-idf.export
 
-# Object files
-*.o
-*.ko
-*.obj
+# Flash/firmware binaries
+*.bin
 *.elf
-
-# Linker output
-*.ilk
 *.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
 *.hex
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
+# Python environment / pip
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 *.pdb
+*.egg-info/
+.venv/
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Visual Studio Code settings
+.vscode/
 
-# debug information files
-*.dwo
+# Backup / temp files
+*.bak
+*.swp
+*.swo
+*.tmp
+*.log
+
+# NVS partitions / flash data
+*.nvs.bin
+*.partition_table.bin
+*.bootloader.bin
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Keep these files in Git:
+# - main source files (*.c, *.cpp, *.h)
+# - CMakeLists.txt
+# - sdkconfig (or sdkconfig.defaults if you want reproducible config)
+# - README.md / LICENSE

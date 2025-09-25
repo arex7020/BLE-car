@@ -7,6 +7,12 @@
 /compile_commands.json.tmp
 /esp-idf.export
 
+# Ignore the led_strip managed component
+managed_components/espressif__led_strip/
+
+# Ignore sdkconfig
+sdkconfig
+
 # Flash/firmware binaries
 *.bin
 *.elf

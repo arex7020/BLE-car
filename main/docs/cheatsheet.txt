@@ -1,5 +1,9 @@
 GIT COMMANDS
 
+git fetch
+
+git pull
+
 
 git checkout -b 01-gatt-dabble origin/01-gatt-dabble
 
@@ -7,12 +11,15 @@ when done:
 
 git add .
 
-git commit -m "commit message"
+git commit -m "commit message" puts changes on local branch
 
-git push -u origin <target>
+git push -u origin <target>    push local branch changes to remote branch
+
+git rm --cached sdkconfig  and git rm -r --cached managed_components/espressif__led_strip -- remove files that are on the repo but keep them locally, 
 
 
 
+ESP-IDF COMMANDS
 
 idf.py fullclean
 idf.py build

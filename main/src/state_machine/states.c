@@ -1,7 +1,5 @@
 #include "state_machine/states.h"
 
-
-
 /* Global pointer to state */
 State *current_state;
 
@@ -26,23 +24,73 @@ void trigger_event(Event e)
 void init_on_enter(State *s) 
 {  
     ESP_LOGI(STATE_TAG, "Entering %s", s->name); 
-    // start GATT_server, init utrasoundsensor, init dac, etc
+    // gatt_init(), ultrasound_init(), dac_init(), speaker_init()
 }
 void init_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Exiting %s", s->name);   }
 void init_on_event(State *s, Event e) 
 {  
     ESP_LOGI(STATE_TAG, "%s event received", s->name);
-    //
-};
+
+    // wait for all init events before changing state
+    static bool e_gatt_rdy = false;
+    static bool e_uss_rdy = false;
+    static bool e_dac_rdy = false;
+    static bool e_speak_rdy = false;
+
+    switch (e)
+    {
+    case E_GATT_RDY:
+        e_gatt_rdy = true;
+        break;
+    case E_SPEAK_RDY:
+        e_speak_rdy = true;
+        break;
+    case E_DAC_RDY:
+        e_dac_rdy = true;
+        break;
+    case E_USS_RDY:
+        e_uss_rdy = true;
+        break;
+    default:
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        break;
+    }
+
+    // check if ready to change state to idle
+    if (e_gatt_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
+        change_state(&S_IDLE);
+    }
+
+}
 
 void idle_on_enter(State *s) {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);  }
 void idle_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Exiting %s", s->name);   }
 void idle_on_event(State *s, Event e) 
 {
     ESP_LOGI(STATE_TAG, "%s event received", s->name);
-    //in idle until we are connected to Bluetooth, then:
-    //change_state(&S_MANUAL)
-};
+    //in idle until we are connected to Bluetooth
+
+    static bool e_gatt_con = false;
+    static bool e_start = false;
+
+    switch (e)
+    {
+    case E_GATT_CON:
+        e_gatt_con = true;
+        break;
+    case E_START:
+        e_start = true;
+    default:
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        break;
+    }
+
+    if(e_gatt_con && e_start) {
+        change_state(&S_MAN);
+    }
+
+    
+}
 
 //Maybe put speaker in thread, maybe state not needed
 void speak_on_enter(State *s) {  ESP_LOGI(STATE_TAG, "Entering %s", s->name); }
@@ -50,21 +98,31 @@ void speak_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Entering %s", s->name); }
 void speak_on_event(State *s, Event e)
 {  
     ESP_LOGI(STATE_TAG, "%s event received", s->name);    
-};
+}
 
 void auto_on_enter(State *s) {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);  }
 void auto_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);  }
 void auto_on_event(State *s, Event e)
 {  
-    ESP_LOGI(STATE_TAG, "%s event received", s->name);    
-};
+    ESP_LOGI(STATE_TAG, "%s event received", s->name);
+
+    switch (e)
+    {
+    case E_COL_DETECTED:
+            change_state(&S_COL);
+        break;
+    default:
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        break;
+    }
+}
 
 void col_on_enter(State *s)  {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    }
 void col_on_exit(State *s)   {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    }
 void col_on_event(State *s, Event e)
 {  
     ESP_LOGI(STATE_TAG, "%s event received", s->name); 
-};
+}
 
 void man_on_enter(State *s)  {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    }
 void man_on_exit(State *s)   {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    }

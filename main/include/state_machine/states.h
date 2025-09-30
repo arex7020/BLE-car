@@ -13,7 +13,15 @@ struct State;
 
 /* Event typedef used for the onevent function to handle commands from BLE */
 typedef enum {
-    //MAN State
+    // INIT Events, all these events need to trigger before leaving init
+    E_GATT_RDY,
+    E_SPEAK_RDY,
+    E_DAC_RDY,
+    E_USS_RDY,
+    // IDLE Events
+    E_GATT_CON,
+    E_START,
+    // MAN Events
     E_IDLE,
     E_FORWARD,
     E_REVERSE,
@@ -21,10 +29,10 @@ typedef enum {
     E_RIGHT,
     E_SPEAK,
     E_AUTO,
-    //INIT Events, all these events need to trigger before leaving init
-    E_SPEAKER_RDY,
-    E_DAC_RDY,
-    E_SENSOR_RDY
+    // AUTO Events
+    E_COL_DETECTED,
+    // COL Events
+    E_COL_CLEARED
 
 } Event;
 

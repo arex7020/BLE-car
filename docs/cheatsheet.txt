@@ -13,7 +13,9 @@ git add .
 
 git commit -m "commit message" puts changes on local branch
 
-git push -u origin <target>    push local branch changes to remote branch
+git push -u origin <target>    push local branch changes to remote branch   
+
+# origin = default name of remote repo. -u = -u → sets upstream tracking, use git push without specifying the branch.
 
 -u makes it upstream, so u can only do git push, or git pull after
 

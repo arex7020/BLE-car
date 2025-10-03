@@ -68,7 +68,7 @@ void idle_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Exiting %s", s->name);   }
 void idle_on_event(State *s, Event e) 
 {
     ESP_LOGI(STATE_TAG, "%s event received", s->name);
-    //in idle until we are connected to Bluetooth
+    //in idle until we are connected to Bluetooth and press start on gamepad, //maybe add led logic
 
     static bool e_gatt_con = false;
     static bool e_start = false;
@@ -89,7 +89,6 @@ void idle_on_event(State *s, Event e)
         change_state(&S_MAN);
     }
 
-    
 }
 
 //Maybe put speaker in thread, maybe state not needed
@@ -122,6 +121,16 @@ void col_on_exit(State *s)   {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    
 void col_on_event(State *s, Event e)
 {  
     ESP_LOGI(STATE_TAG, "%s event received", s->name); 
+
+    switch (e)
+    {
+    case E_COL_CLEARED:
+            change_state(&S_AUTO);
+        break;
+    default:
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        break;
+    }   
 }
 
 void man_on_enter(State *s)  {  ESP_LOGI(STATE_TAG, "Entering %s", s->name);    }
@@ -146,16 +155,28 @@ void man_on_event(State *s, Event e)
     case E_RIGHT:
         ESP_LOGI("%s", "RIGHT",EVENT_TAG);
         break;
-    case E_SPEAK:
-        ESP_LOGI("%s", "SPEAK",EVENT_TAG);
+    case E_SPEAK1:
+        ESP_LOGI("%s", "SPEAK1",EVENT_TAG);
         change_state(&S_SPEAK);
         break;
-    case E_AUTO:
+    case E_SPEAK2:
+        ESP_LOGI("%s", "SPEAK2",EVENT_TAG);
+        change_state(&S_SPEAK);
+        break;
+    case E_SPEAK3:
+        ESP_LOGI("%s", "SPEAK3",EVENT_TAG);
+        change_state(&S_SPEAK);
+        break;
+    case E_SPEAK4:
+        ESP_LOGI("%s", "SPEAK4",EVENT_TAG);
+        change_state(&S_SPEAK);
+        break;
+    case E_AUTO_SELECT:
         ESP_LOGI("%s", "AUTO",EVENT_TAG);
         change_state(&S_AUTO);
         break;
     default:
-        ESP_LOGI("%s", "IDK",EVENT_TAG);
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
         break;
     }
 }

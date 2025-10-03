@@ -27,8 +27,11 @@ typedef enum {
     E_REVERSE,
     E_LEFT,
     E_RIGHT,
-    E_SPEAK,
-    E_AUTO,
+    E_AUTO_SELECT,
+    E_SPEAK1,
+    E_SPEAK2,
+    E_SPEAK3,
+    E_SPEAK4,
     // AUTO Events
     E_COL_DETECTED,
     // COL Events

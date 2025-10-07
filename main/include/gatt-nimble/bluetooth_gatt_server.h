@@ -3,8 +3,8 @@
  *
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef BLUETOOTH_GATT_SERVER_H
+#define BLUETOOTH_GATT_SERVER_H
 
 /* Includes */
 /* STD APIs */
@@ -34,4 +34,4 @@
 #define TAG "GATT"
 #define DEVICE_NAME "AREX7020_CAR"
 
-#endif // COMMON_H
+#endif // BLUETOOTH_GATT_SERVER_H

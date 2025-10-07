@@ -5,7 +5,7 @@
  */
 /* Includes */
 #include "gatt-nimble/gap.h"
-#include "gatt-nimble/common.h"
+#include "gatt-nimble/bluetooth_gatt_server.h"
 #include "gatt-nimble/gatt_svc.h"
 
 /* Private function declarations */

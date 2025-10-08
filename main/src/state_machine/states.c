@@ -8,14 +8,19 @@ State *current_state;
 void change_state(State* new_state)
 {   
     /* checks if current on_exit function existson current state before changing state, then checks and runs on_enter function on new state */
-    if(current_state->on_exit)  current_state->on_exit(current_state);
+    if(current_state && current_state->on_exit) 
+        current_state->on_exit(current_state);
+
     current_state = new_state;
-    if(current_state->on_enter) current_state->on_enter(current_state);
+
+    if(current_state && current_state->on_enter)
+        current_state->on_enter(current_state);
 }
 
 void trigger_event(Event e)
 {
-    if(current_state && current_state->on_event)  current_state->on_event(current_state, e);
+    if(current_state && current_state->on_event)
+        current_state->on_event(current_state, e);
 }
 
 /* if _on_ functions become too big, move them out into seperate files */
@@ -25,6 +30,8 @@ void init_on_enter(State *s)
 {  
     ESP_LOGI(STATE_TAG, "Entering %s", s->name); 
     // gatt_init(), ultrasound_init(), dac_init(), speaker_init()
+
+    ble_main_init();
 }
 void init_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Exiting %s", s->name);   }
 void init_on_event(State *s, Event e) 
@@ -41,6 +48,7 @@ void init_on_event(State *s, Event e)
     {
     case E_GATT_RDY:
         e_gatt_rdy = true;
+        ESP_LOGW("EVENT","TRIGGERED");
         break;
     case E_SPEAK_RDY:
         e_speak_rdy = true;
@@ -80,6 +88,7 @@ void idle_on_event(State *s, Event e)
         break;
     case E_START:
         e_start = true;
+        break;
     default:
         ESP_LOGW(STATE_TAG, "Unexpected event recieved");
         break;

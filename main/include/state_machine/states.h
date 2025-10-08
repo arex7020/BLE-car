@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "esp_log.h"
+#include "gatt-nimble/bluetooth_gatt_server.h"
 
 /* LOG State tag */
 static const char *STATE_TAG = "STATE";

@@ -142,27 +142,54 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
         if (attr_handle == gamepad_chr_val_handle) {
             /* Verify access buffer length */
             if (ctxt->om->om_len > 0) {
-                ESP_LOG_BUFFER_HEX("Gamepad raw data", ctxt->om->om_data, ctxt->om->om_len);
-                uint8_t cmd = ctxt->om->om_data[6];
+                
+                uint8_t byte5 = ctxt->om->om_data[5];
+                uint8_t byte6 = ctxt->om->om_data[6];
+
+                uint16_t cmd = (byte5 << 8) | byte6;
+                // FOR DEBUG: ESP_LOGI(TAG, "Gamepad combined value: 0x%04X", cmd);
+                // FOR DEBUG:ESP_LOG_BUFFER_HEX("Gamepad raw data", ctxt->om->om_data, ctxt->om->om_len);
 
                 switch(cmd) {
-                    case 0x00:
-                        ESP_LOGI(TAG, "Gamepad Released");
+                    // Released
+                    case 0x0000:
+                        ESP_LOGI(TAG, "Button Released");
                         break;
-                    case 0x01:
-                        ESP_LOGI(TAG, "Gamepad UP Pressed");
+                    // Movement
+                    case 0x0001:
+                        ESP_LOGI(TAG, "Button UP Pressed");
                         break;
-                    case 0x02:
-                        ESP_LOGI(TAG, "Gamepad DOWN Pressed");
+                    case 0x0002:
+                        ESP_LOGI(TAG, "Button DOWN Pressed");
                         break;
-                    case 0x04:
-                        ESP_LOGI(TAG, "Gamepad LEFT Pressed");
+                    case 0x0004:
+                        ESP_LOGI(TAG, "Button LEFT Pressed");
                         break;
-                    case 0x08:
-                        ESP_LOGI(TAG, "Gamepad RIGHT Pressed");
+                    case 0x0008:
+                        ESP_LOGI(TAG, "Button RIGHT Pressed");
+                        break;
+                    // Action Buttons
+                    case 0x1000:
+                        ESP_LOGI(TAG, "Button X Pressed");
+                        break;
+                    case 0x2000:
+                        ESP_LOGI(TAG, "Button SQUARE Pressed");
+                        break;
+                    case 0x0400:
+                        ESP_LOGI(TAG, "Button TRIANGLE Pressed");
+                        break;
+                    case 0x0800:
+                        ESP_LOGI(TAG, "Button CIRCLE Pressed");
+                        break;
+                    // Start, Select
+                    case 0x0100:
+                        ESP_LOGI(TAG, "Button START Pressed");
+                        break;
+                    case 0x0200:
+                        ESP_LOGI(TAG, "Button SELECT Pressed");
                         break;
                     default:
-                        ESP_LOGW(TAG, "Unknown Gamepad Command: 0x%02X", cmd);
+                        ESP_LOGW(TAG, "Unknown Button Command: 0x%04X", cmd);
                         break;
                 }
             } else {
@@ -179,7 +206,7 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
 
 error:
     ESP_LOGE(TAG,
-             "unexpected access operation to gamepad characteristic, opcode: %d",
+             "unexpected access operation to gamepad or led characteristic, opcode: %d",
              ctxt->op);
     return BLE_ATT_ERR_UNLIKELY;
 }

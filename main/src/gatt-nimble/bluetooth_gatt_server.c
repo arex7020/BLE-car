@@ -76,7 +76,7 @@ static void heart_rate_task(void *param) {
     /* Clean up at exit */
     vTaskDelete(NULL);
 }
-
+/* Initialize BLE GATT Server and put server in xTask Thread */
 void ble_main_init(void) {
     /* Local variables */
     int rc;

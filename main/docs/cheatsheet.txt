@@ -1,0 +1,34 @@
+GIT COMMANDS
+
+git fetch
+
+git pull
+
+
+git checkout -b 01-gatt-dabble origin/01-gatt-dabble
+
+when done:
+
+git add .
+
+git commit -m "commit message" puts changes on local branch
+
+git push -u origin <target>    push local branch changes to remote branch
+
+-u makes it upstream, so u can only do git push, or git pull after
+
+git rm --cached sdkconfig  and git rm -r --cached managed_components/espressif__led_strip -- remove files that are on the repo but keep them locally, 
+
+
+
+ESP-IDF COMMANDS
+
+idf.py fullclean
+idf.py build
+idf.py reconfigure
+idf.py set-target esp32
+idf.py create-project <name>
+
+
+if intellisense breaks:
+Ctrl+Shift+P Config intellisense

@@ -34,4 +34,6 @@
 #define TAG "GATT"
 #define DEVICE_NAME "AREX7020_CAR"
 
+void ble_main_init();
+
 #endif // BLUETOOTH_GATT_SERVER_H

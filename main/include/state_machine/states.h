@@ -19,6 +19,7 @@ typedef enum {
     E_SPEAK_RDY,
     E_DAC_RDY,
     E_USS_RDY,
+    E_MOTOR_RDY,
     // IDLE Events
     E_GATT_CON,
     E_START,

@@ -184,6 +184,7 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
                     // Start, Select
                     case 0x0100:
                         ESP_LOGI(TAG, "Button START Pressed");
+                        trigger_event(E_START);
                         break;
                     case 0x0200:
                         ESP_LOGI(TAG, "Button SELECT Pressed");
@@ -273,6 +274,8 @@ void gatt_svr_subscribe_cb(struct ble_gap_event *event) {
     if (event->subscribe.conn_handle != BLE_HS_CONN_HANDLE_NONE) {
         ESP_LOGI(TAG, "subscribe event; conn_handle=%d attr_handle=%d",
                  event->subscribe.conn_handle, event->subscribe.attr_handle);
+        /* Send event when connected */
+        trigger_event(E_GATT_CON);
     } else {
         ESP_LOGI(TAG, "subscribe by nimble stack; attr_handle=%d",
                  event->subscribe.attr_handle);
@@ -285,6 +288,8 @@ void gatt_svr_subscribe_cb(struct ble_gap_event *event) {
         heart_rate_chr_conn_handle_inited = true;
         heart_rate_ind_status = event->subscribe.cur_indicate;
     }
+
+    
 }
 
 /*

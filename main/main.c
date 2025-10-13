@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include "esp_log.h"
 #include "state_machine/states.h"
-#include "gatt-nimble/bluetooth_gatt_server.h"
+
+
+void main_task(){
+
+        change_state(&S_INIT);
+
+    while (1) {
+        
+        //keep main loop alive
+        vTaskDelay(1000/ portTICK_PERIOD_MS);
+    }
+}
 
 void app_main(void)
 {
-    ESP_LOGI("BLE-car", "Hello world!");
-    change_state(&S_INIT);
+    xTaskCreate(main_task, "MainTask", 4096, NULL, 5, NULL);
+    
 }
 

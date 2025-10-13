@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "esp_log.h"
+#include "gatt-nimble/bluetooth_gatt_server.h"
 
 /* LOG State tag */
 static const char *STATE_TAG = "STATE";
@@ -18,6 +19,7 @@ typedef enum {
     E_SPEAK_RDY,
     E_DAC_RDY,
     E_USS_RDY,
+    E_MOTOR_RDY,
     // IDLE Events
     E_GATT_CON,
     E_START,

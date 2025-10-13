@@ -16,10 +16,11 @@ struct State;
 typedef enum {
     // INIT Events, all these events need to trigger before leaving init
     E_GATT_RDY,
+    E_PWM_RDY,
+    E_BRIDGE_RDY,
     E_SPEAK_RDY,
     E_DAC_RDY,
     E_USS_RDY,
-    E_MOTOR_RDY,
     // IDLE Events
     E_GATT_CON,
     E_START,

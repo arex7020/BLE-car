@@ -40,20 +40,30 @@ void init_on_event(State *s, Event e)
 
     // wait for all init events before changing state
     static bool e_gatt_rdy = false;
-    static bool e_motor_rdy = true;
-    static bool e_uss_rdy = true;
-    static bool e_dac_rdy = true;
-    static bool e_speak_rdy = true;
+    static bool e_pwm_rdy = false;
+    static bool e_bridge_rdy = false;
+    static bool e_uss_rdy = false;
+    static bool e_dac_rdy = false;
+    static bool e_speak_rdy = false;
+
+
+    /* NOT YET IMPLEMENTED, SET TO TRUE FOR TESTING */
     
+    e_bridge_rdy = true;
+    e_uss_rdy = true;
+    e_dac_rdy = true;
+    e_speak_rdy = true;
 
     switch (e)
     {
     case E_GATT_RDY:
         e_gatt_rdy = true;
         break;
-    case E_MOTOR_RDY:
-        e_motor_rdy = true;
+    case E_PWM_RDY:
+        e_pwm_rdy = true;
         break;
+    case E_BRIDGE_RDY:
+        e_bridge_rdy = true;
     case E_USS_RDY:
         e_uss_rdy = true;
         break;
@@ -69,7 +79,7 @@ void init_on_event(State *s, Event e)
     }
 
     // check if ready to change state to idle
-    if (e_gatt_rdy && e_motor_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
+    if (e_gatt_rdy && e_pwm_rdy && e_ln298_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
         change_state(&S_IDLE);
     }
 

@@ -1,3 +1,10 @@
+/**
+ * File: states.h
+ * Description: Defines driving/steering functions to control wheels
+ * Author: arex7020
+ * Date: 2025-10-13
+ */
+
 #ifndef STATES_H
 #define STATES_H
 
@@ -44,7 +51,7 @@ typedef enum {
 
 
 /* NOTE:
-*  To call change_state and trigger_event, other files dont need to
+*  To call change_state and event_trigger, other files dont need to
 *  know about these 3 typedefs. maybe move them into seperate header in the future. 
 */
 
@@ -74,6 +81,6 @@ extern State S_MAN;
 
 /* functions to trigger events and change the state */
 void change_state(State *new_state);
-void trigger_event(Event e);
+void event_trigger(Event e);
 
 #endif // STATES_H

@@ -1,6 +1,6 @@
 #include "motor_control/motor.h"
 
-/* Configures Timer and two channels for each DC motor */
+/* Defines pwm timer, channels and binds it to PWM_GPIO Pin, starts at 0% duty cycle */
 void config_pwm_channels(void)
 {
     ledc_timer_config_t ledc_timer = {
@@ -14,29 +14,45 @@ void config_pwm_channels(void)
     ledc_timer_config(&ledc_timer);
 
     ledc_channel_config_t channel_conf_left = {
-    .gpio_num   = PWM_GPIO_L,             // Replace with your motor control pin
+    .gpio_num   = GPIO_PWM_L,
     .speed_mode = LEDC_LOW_SPEED_MODE,
-    .channel    = LEDC_CHANNEL_0,         // Use 0-7 for ESP32
+    .channel    = LEDC_CHANNEL_0,
     .intr_type  = LEDC_INTR_DISABLE,
-    .timer_sel  = LEDC_TIMER_0,           // Must match timer used above
-    .duty       = 0,                      // Start with 0% duty
+    .timer_sel  = LEDC_TIMER_0,
+    .duty       = 0,
     .hpoint     = 0
     };
 
     ledc_channel_config(&channel_conf_left);
     
     ledc_channel_config_t channel_conf_right = {
-        .gpio_num   = PWM_GPIO_R,             // Replace with your motor control pin
+        .gpio_num   = GPIO_PWM_R,
         .speed_mode = LEDC_LOW_SPEED_MODE,
-        .channel    = LEDC_CHANNEL_1,         // Use 0-7 for ESP32
-        .intr_type  = LEDC_INTR_DISABLE,
-        .timer_sel  = LEDC_TIMER_0,           // Must match timer used above
-        .duty       = 0,                      // Start with 0% duty
+        .channel    = LEDC_CHANNEL_1,
+        .timer_sel  = LEDC_TIMER_0,
+        .duty       = 0,
         .hpoint     = 0
     };
     
     ledc_channel_config(&channel_conf_right);
 
-    trigger_event(E_PWM_RDY);
+    event_trigger(E_PWM_RDY);
 
 }
+
+/* Configure LN298_IN pins to Output */
+void config_ln298_pins(void)
+{
+    gpio_config_t io_conf = {
+    .pin_bit_mask = (1ULL << GPIO_LN298_IN1) | (1ULL << GPIO_LN298_IN2) | (1ULL << GPIO_LN298_IN3) | (1ULL << GPIO_LN298_IN4),
+    .mode = GPIO_MODE_OUTPUT,
+    .pull_up_en = GPIO_PULLUP_DISABLE,
+    .pull_down_en = GPIO_PULLDOWN_DISABLE,
+    .intr_type = GPIO_INTR_DISABLE
+    };
+    gpio_config(&io_conf);
+
+    event_trigger(E_BRIDGE_RDY);
+}
+
+

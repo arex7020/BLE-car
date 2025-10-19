@@ -17,7 +17,7 @@ void change_state(State* new_state)
         current_state->on_enter(current_state);
 }
 
-void trigger_event(Event e)
+void event_trigger(Event e)
 {
     if(current_state && current_state->on_event)
         current_state->on_event(current_state, e);
@@ -64,6 +64,7 @@ void init_on_event(State *s, Event e)
         break;
     case E_BRIDGE_RDY:
         e_bridge_rdy = true;
+        break;
     case E_USS_RDY:
         e_uss_rdy = true;
         break;
@@ -79,7 +80,7 @@ void init_on_event(State *s, Event e)
     }
 
     // check if ready to change state to idle
-    if (e_gatt_rdy && e_pwm_rdy && e_ln298_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
+    if (e_gatt_rdy && e_pwm_rdy && e_bridge_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
         change_state(&S_IDLE);
     }
 

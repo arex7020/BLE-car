@@ -2,6 +2,9 @@
  * SPDX-FileCopyrightText: 2024 Espressif Systems (Shanghai) CO LTD
  *
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
+ * 
+ *
+ * 
  */
 #ifndef HEART_RATE_H
 #define HEART_RATE_H

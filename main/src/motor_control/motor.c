@@ -1,7 +1,7 @@
 #include "motor_control/motor.h"
 
 /* Defines pwm timer, channels and binds it to PWM_GPIO Pin, starts at 0% duty cycle */
-void config_pwm_channels(void)
+void config_pwm_channels(uint32_t power)
 {
     ledc_timer_config_t ledc_timer = {
     .speed_mode     = LEDC_LOW_SPEED_MODE,
@@ -19,7 +19,7 @@ void config_pwm_channels(void)
     .channel    = LEDC_CHANNEL_0,
     .intr_type  = LEDC_INTR_DISABLE,
     .timer_sel  = LEDC_TIMER_0,
-    .duty       = 0,
+    .duty       = power,
     .hpoint     = 0
     };
 
@@ -30,7 +30,7 @@ void config_pwm_channels(void)
         .speed_mode = LEDC_LOW_SPEED_MODE,
         .channel    = LEDC_CHANNEL_1,
         .timer_sel  = LEDC_TIMER_0,
-        .duty       = 0,
+        .duty       = power,
         .hpoint     = 0
     };
     
@@ -40,7 +40,7 @@ void config_pwm_channels(void)
 
 }
 
-/* Configure LN298_IN pins to Output */
+/* Configure LN298_IN pins to Output and set them to LOW */
 void config_ln298_pins(void)
 {
     gpio_config_t io_conf = {
@@ -51,6 +51,11 @@ void config_ln298_pins(void)
     .intr_type = GPIO_INTR_DISABLE
     };
     gpio_config(&io_conf);
+    
+    gpio_set_level(GPIO_LN298_IN1, 0);
+    gpio_set_level(GPIO_LN298_IN2, 0);
+    gpio_set_level(GPIO_LN298_IN3, 0);
+    gpio_set_level(GPIO_LN298_IN4, 0);
 
     event_trigger(E_BRIDGE_RDY);
 }

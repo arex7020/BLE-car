@@ -4,7 +4,6 @@
  * Author: arex7020
  * Date: 2025-10-19
  */
-
 #ifndef MOTOR_H
 #define MOTOR_H
 
@@ -23,7 +22,7 @@
 
 
 
-void config_pwm_channels(void);
+void config_pwm_channels(uint32_t duty);
 
 void config_ln298_pins(void);
 

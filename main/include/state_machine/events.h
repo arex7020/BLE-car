@@ -1,3 +1,6 @@
+#ifndef EVENTS_H
+#define EVENTS_H
+
 /* Event typedef used for the onevent function to handle commands from BLE */
 typedef enum {
     // INIT Events, all these events need to trigger before leaving init
@@ -32,3 +35,5 @@ typedef enum {
 
 /* function to call event trigger */
 void event_trigger(Event e);
+
+#endif // EVENTS_H

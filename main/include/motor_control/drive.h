@@ -4,6 +4,7 @@
  * Author: arex7020
  * Date: 2025-10-19
  */
+
 #ifndef DRIVE_H
 #define DRIVE_H
 
@@ -11,7 +12,7 @@
 
 void drive_idle(void);
 void drive_forward(void);
-void drive_backward(void);
+void drive_reverse(void);
 
 void steer_left(void);
 void steer_left_sharp(void);

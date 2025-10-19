@@ -10,8 +10,7 @@
 #include <driver/ledc.h>
 #include "esp_err.h"
 #include "driver/gpio.h"
-
-#include "state_machine/states.h"
+#include "state_machine/events.h"
 
 #define GPIO_PWM_L 5
 #define GPIO_PWM_R 6
@@ -20,10 +19,8 @@
 #define GPIO_LN298_IN3 9
 #define GPIO_LN298_IN4 10
 
+void pwm_channels_init(uint32_t duty);
 
-
-void config_pwm_channels(uint32_t duty);
-
-void config_ln298_pins(void);
+void bridge_init(void);
 
 #endif // MOTOR_H

@@ -29,9 +29,11 @@ void event_trigger(Event e)
 void init_on_enter(State *s) 
 {  
     ESP_LOGI(STATE_TAG, "Entering %s", s->name); 
-    // gatt_init(), ultrasound_init(), dac_init(), speaker_init()
+    // ultrasound_init(), dac_init(), speaker_init()
 
     ble_main_init();
+    pwm_channels_init(30);
+    bridge_init();
 }
 void init_on_exit(State *s)  {  ESP_LOGI(STATE_TAG, "Exiting %s", s->name);   }
 void init_on_event(State *s, Event e) 
@@ -48,8 +50,6 @@ void init_on_event(State *s, Event e)
 
 
     /* NOT YET IMPLEMENTED, SET TO TRUE FOR TESTING */
-    
-    e_bridge_rdy = true;
     e_uss_rdy = true;
     e_dac_rdy = true;
     e_speak_rdy = true;
@@ -75,7 +75,7 @@ void init_on_event(State *s, Event e)
         e_speak_rdy = true;
         break;
     default:
-        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved, Ignoring");
         break;
     }
 
@@ -105,7 +105,7 @@ void idle_on_event(State *s, Event e)
         e_start = true;
         break;
     default:
-        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved, Ignoring");
         break;
     }
 
@@ -135,7 +135,7 @@ void auto_on_event(State *s, Event e)
             change_state(&S_COL);
         break;
     default:
-        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved, Ignoring");
         break;
     }
 }
@@ -152,7 +152,7 @@ void col_on_event(State *s, Event e)
             change_state(&S_AUTO);
         break;
     default:
-        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved, Ignoring");
         break;
     }   
 }
@@ -166,41 +166,50 @@ void man_on_event(State *s, Event e)
     switch (e) {
     case E_IDLE:
         ESP_LOGI("%s", "IDLE",EVENT_TAG);
+        drive_idle();
         break;
     case E_FORWARD:
         ESP_LOGI("%s", "FORWARD",EVENT_TAG);
+        drive_forward();
         break;
     case E_REVERSE:
         ESP_LOGI("%s", "REVERSE",EVENT_TAG);
+        drive_reverse();
         break;
     case E_LEFT:
         ESP_LOGI("%s", "LEFT",EVENT_TAG);
+        steer_left();
+        break;
+    case E_LEFT_SHARP:
+        ESP_LOGI("%s", "LEFT_SHARP",EVENT_TAG);
+        steer_left_sharp();
         break;
     case E_RIGHT:
         ESP_LOGI("%s", "RIGHT",EVENT_TAG);
+        steer_right();
+        break;
+    case E_RIGHT_SHARP:
+        ESP_LOGI("%s", "RIGHT_SHARP",EVENT_TAG);
+        steer_right_sharp();
+        break;
+    case E_TURN_MODE:
+        ESP_LOGI("%s", "TURN MODE",EVENT_TAG);
         break;
     case E_SPEAK1:
         ESP_LOGI("%s", "SPEAK1",EVENT_TAG);
-        change_state(&S_SPEAK);
         break;
     case E_SPEAK2:
         ESP_LOGI("%s", "SPEAK2",EVENT_TAG);
-        change_state(&S_SPEAK);
         break;
     case E_SPEAK3:
         ESP_LOGI("%s", "SPEAK3",EVENT_TAG);
-        change_state(&S_SPEAK);
-        break;
-    case E_SPEAK4:
-        ESP_LOGI("%s", "SPEAK4",EVENT_TAG);
-        change_state(&S_SPEAK);
         break;
     case E_AUTO_SELECT:
         ESP_LOGI("%s", "AUTO",EVENT_TAG);
         change_state(&S_AUTO);
         break;
     default:
-        ESP_LOGW(STATE_TAG, "Unexpected event recieved");
+        ESP_LOGW(STATE_TAG, "Unexpected event recieved, Ignoring");
         break;
     }
 }

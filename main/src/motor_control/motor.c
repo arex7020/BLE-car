@@ -1,7 +1,7 @@
 #include "motor_control/motor.h"
 
-/* Defines pwm timer, channels and binds it to PWM_GPIO Pin, starts at 0% duty cycle */
-void config_pwm_channels(uint32_t power)
+/* Initializes pwm timer, channels and binds it to PWM_GPIO Pin, starts at 0% duty cycle */
+void pwm_channels_init(uint32_t power)
 {
     ledc_timer_config_t ledc_timer = {
     .speed_mode     = LEDC_LOW_SPEED_MODE,
@@ -41,7 +41,7 @@ void config_pwm_channels(uint32_t power)
 }
 
 /* Configure LN298_IN pins to Output and set them to LOW */
-void config_ln298_pins(void)
+void bridge_init(void)
 {
     gpio_config_t io_conf = {
     .pin_bit_mask = (1ULL << GPIO_LN298_IN1) | (1ULL << GPIO_LN298_IN2) | (1ULL << GPIO_LN298_IN3) | (1ULL << GPIO_LN298_IN4),

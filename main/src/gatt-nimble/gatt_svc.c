@@ -154,32 +154,41 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
                     // Released
                     case 0x0000:
                         ESP_LOGI(TAG, "Button Released");
+                        event_trigger(E_IDLE);
                         break;
                     // Movement
                     case 0x0001:
                         ESP_LOGI(TAG, "Button UP Pressed");
+                        event_trigger(E_FORWARD);
                         break;
                     case 0x0002:
                         ESP_LOGI(TAG, "Button DOWN Pressed");
+                        event_trigger(E_REVERSE);
                         break;
                     case 0x0004:
                         ESP_LOGI(TAG, "Button LEFT Pressed");
+                        event_trigger(E_LEFT);
                         break;
                     case 0x0008:
                         ESP_LOGI(TAG, "Button RIGHT Pressed");
+                        event_trigger(E_RIGHT);
                         break;
                     // Action Buttons
                     case 0x1000:
                         ESP_LOGI(TAG, "Button X Pressed");
+                        event_trigger(E_SPEAK1);
                         break;
                     case 0x2000:
                         ESP_LOGI(TAG, "Button SQUARE Pressed");
+                        event_trigger(E_SPEAK2);
                         break;
                     case 0x0400:
                         ESP_LOGI(TAG, "Button TRIANGLE Pressed");
+                        event_trigger(E_TURN_MODE);
                         break;
                     case 0x0800:
                         ESP_LOGI(TAG, "Button CIRCLE Pressed");
+                        event_trigger(E_SPEAK3);
                         break;
                     // Start, Select
                     case 0x0100:
@@ -188,6 +197,7 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
                         break;
                     case 0x0200:
                         ESP_LOGI(TAG, "Button SELECT Pressed");
+                        event_trigger(E_AUTO_SELECT);
                         break;
                     default:
                         ESP_LOGW(TAG, "Unknown Button Command: 0x%04X", cmd);

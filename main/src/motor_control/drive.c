@@ -7,7 +7,7 @@
 /**
  * 
  * Forward:     IN1: 0 IN2: 1, IN3: 0 IN4: 1 
- * Backward:    IN1: 1 IN2: 0, IN3: 1 IN4: 0
+ * Reverse:     IN1: 1 IN2: 0, IN3: 1 IN4: 0
  * 
  * Steer Left:  IN1: 0 IN2: 0, IN3: 0 IN4: 1
  * Steer Right: IN1: 0 IN2: 1, IN3: 0 IN4: 0
@@ -44,8 +44,8 @@ void drive_forward(void) {
     gpio_set_level(GPIO_LN298_IN4, 1);
 }
 
-/* Motors drive backward */
-void drive_backward(void) {
+/* Motors drive reverse */
+void drive_reverse(void) {
 
     gpio_set_level(GPIO_LN298_IN1, 1);
     gpio_set_level(GPIO_LN298_IN2, 0);

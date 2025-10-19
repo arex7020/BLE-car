@@ -5,7 +5,7 @@
 
 void main_task(){
 
-        change_state(&S_INIT);
+    change_state(&S_INIT);
 
     while (1) {
         

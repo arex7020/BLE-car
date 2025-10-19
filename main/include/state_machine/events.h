@@ -7,7 +7,7 @@ typedef enum {
     E_GATT_RDY,
     E_PWM_RDY,
     E_BRIDGE_RDY,
-    E_SPEAK_RDY,
+    E_SPEAKER_RDY,
     E_DAC_RDY,
     E_USS_RDY,
     // IDLE Events
@@ -21,11 +21,11 @@ typedef enum {
     E_LEFT_SHARP,
     E_RIGHT,
     E_RIGHT_SHARP,
-    E_AUTO_SELECT,
+    E_TURN_MODE,
     E_SPEAK1,
     E_SPEAK2,
     E_SPEAK3,
-    E_TURN_MODE,
+    E_SELECT,
     // AUTO Events
     E_COL_DETECTED,
     // COL Events

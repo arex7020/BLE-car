@@ -124,19 +124,19 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
 
     /* Write characteristic event */
     case BLE_GATT_ACCESS_OP_WRITE_CHR:
-        // Log write
-        ESP_LOGI(TAG, "Gamepad write; conn_handle=%d attr_handle=%d len=%d",
-                 conn_handle, attr_handle, ctxt->om->om_len);
+        // // Log write
+        // ESP_LOGI(TAG, "Gamepad write; conn_handle=%d attr_handle=%d len=%d",
+        //          conn_handle, attr_handle, ctxt->om->om_len);
       
-        /* Verify connection handle */
-        if (conn_handle != BLE_HS_CONN_HANDLE_NONE) {
-            ESP_LOGI(TAG, "characteristic write; conn_handle=%d attr_handle=%d",
-                     conn_handle, attr_handle);
-        } else {
-            ESP_LOGI(TAG,
-                     "characteristic write by nimble stack; attr_handle=%d",
-                     attr_handle);
-        }
+        // /* Verify connection handle */
+        // if (conn_handle != BLE_HS_CONN_HANDLE_NONE) {
+        //     ESP_LOGI(TAG, "characteristic write; conn_handle=%d attr_handle=%d",
+        //              conn_handle, attr_handle);
+        // } else {
+        //     ESP_LOGI(TAG,
+        //              "characteristic write by nimble stack; attr_handle=%d",
+        //              attr_handle);
+        // }
 
         /* Verify attribute handle */
         if (attr_handle == gamepad_chr_val_handle) {
@@ -153,54 +153,54 @@ static int gamepad_chr_access(uint16_t conn_handle, uint16_t attr_handle,
                 switch(cmd) {
                     // Released
                     case 0x0000:
-                        ESP_LOGI(TAG, "Button Released");
+                        //ESP_LOGI(TAG, "Button Released");
                         event_trigger(E_IDLE);
                         break;
                     // Movement
                     case 0x0001:
-                        ESP_LOGI(TAG, "Button UP Pressed");
+                        //ESP_LOGI(TAG, "Button UP Pressed");
                         event_trigger(E_FORWARD);
                         break;
                     case 0x0002:
-                        ESP_LOGI(TAG, "Button DOWN Pressed");
+                        //ESP_LOGI(TAG, "Button DOWN Pressed");
                         event_trigger(E_REVERSE);
                         break;
                     case 0x0004:
-                        ESP_LOGI(TAG, "Button LEFT Pressed");
+                        //ESP_LOGI(TAG, "Button LEFT Pressed");
                         event_trigger(E_LEFT);
                         break;
                     case 0x0008:
-                        ESP_LOGI(TAG, "Button RIGHT Pressed");
+                        //ESP_LOGI(TAG, "Button RIGHT Pressed");
                         event_trigger(E_RIGHT);
                         break;
                     // Action Buttons
                     case 0x1000:
-                        ESP_LOGI(TAG, "Button X Pressed");
+                        //ESP_LOGI(TAG, "Button X Pressed");
                         event_trigger(E_SPEAK1);
                         break;
                     case 0x2000:
-                        ESP_LOGI(TAG, "Button SQUARE Pressed");
+                        //ESP_LOGI(TAG, "Button SQUARE Pressed");
                         event_trigger(E_SPEAK2);
                         break;
                     case 0x0400:
-                        ESP_LOGI(TAG, "Button TRIANGLE Pressed");
+                        //ESP_LOGI(TAG, "Button TRIANGLE Pressed");
                         event_trigger(E_TURN_MODE);
                         break;
                     case 0x0800:
-                        ESP_LOGI(TAG, "Button CIRCLE Pressed");
+                        //ESP_LOGI(TAG, "Button CIRCLE Pressed");
                         event_trigger(E_SPEAK3);
                         break;
                     // Start, Select
                     case 0x0100:
-                        ESP_LOGI(TAG, "Button START Pressed");
+                        //ESP_LOGI(TAG, "Button START Pressed");
                         event_trigger(E_START);
                         break;
                     case 0x0200:
-                        ESP_LOGI(TAG, "Button SELECT Pressed");
-                        event_trigger(E_AUTO_SELECT);
+                        //ESP_LOGI(TAG, "Button SELECT Pressed");
+                        event_trigger(E_SELECT);
                         break;
                     default:
-                        ESP_LOGW(TAG, "Unknown Button Command: 0x%04X", cmd);
+                        //ESP_LOGW(TAG, "Unknown Button Command: 0x%04X", cmd);
                         break;
                 }
             } else {
@@ -276,16 +276,14 @@ void gatt_svr_register_cb(struct ble_gatt_register_ctxt *ctxt, void *arg) {
 
 /*
  *  GATT server subscribe event callback
- *      1. Update heart rate subscription status
- */
+ *      1. Update heart rate subscription status */
 
 void gatt_svr_subscribe_cb(struct ble_gap_event *event) {
     /* Check connection handle */
     if (event->subscribe.conn_handle != BLE_HS_CONN_HANDLE_NONE) {
         ESP_LOGI(TAG, "subscribe event; conn_handle=%d attr_handle=%d",
                  event->subscribe.conn_handle, event->subscribe.attr_handle);
-        /* Send event when connected */
-        event_trigger(E_GATT_CON);
+        
     } else {
         ESP_LOGI(TAG, "subscribe by nimble stack; attr_handle=%d",
                  event->subscribe.attr_handle);

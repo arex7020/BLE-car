@@ -12,12 +12,14 @@
 #include "driver/gpio.h"
 #include "state_machine/events.h"
 
-#define GPIO_PWM_L 5
-#define GPIO_PWM_R 6
-#define GPIO_LN298_IN1 7
-#define GPIO_LN298_IN2 8
-#define GPIO_LN298_IN3 9
-#define GPIO_LN298_IN4 10
+#define GPIO_LN298_IN1 12
+#define GPIO_LN298_IN2 14
+#define GPIO_LN298_IN3 27
+#define GPIO_LN298_IN4 26
+
+#define GPIO_PWM_L 25
+#define GPIO_PWM_R 33
+
 
 void pwm_channels_init(uint32_t duty);
 

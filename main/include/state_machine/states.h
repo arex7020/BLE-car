@@ -14,10 +14,6 @@
 #include "motor_control/drive.h"
 #include "state_machine/events.h"
 
-/* LOG State tag */
-static const char *STATE_TAG = "STATE";
-/* LOG Event tag */
-static const char *EVENT_TAG = "EVENT";
 
 struct State;
 

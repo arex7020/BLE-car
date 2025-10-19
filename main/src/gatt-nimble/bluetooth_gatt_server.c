@@ -47,8 +47,6 @@ static void nimble_host_config_init(void) {
 
 static void nimble_host_task(void *param) {
     /* Task entry log */
-    ESP_LOGI(TAG, "nimble host task has been started!");
-    
     event_trigger(E_GATT_RDY);
     /* This function won't return until nimble_port_stop() is executed */
     nimble_port_run();

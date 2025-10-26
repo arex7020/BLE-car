@@ -12,7 +12,7 @@
 #include "driver/gpio.h"
 #include "state_machine/events.h"
 
-#define GPIO_LN298_IN1 12
+#define GPIO_LN298_IN1 13
 #define GPIO_LN298_IN2 14
 #define GPIO_LN298_IN3 27
 #define GPIO_LN298_IN4 26

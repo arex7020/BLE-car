@@ -32,7 +32,7 @@ void init_on_enter(State *s)
     // ultrasound_init(), dac_init(), speaker_init()
 
     ble_main_init();
-    pwm_channels_init(30);
+    pwm_channels_init(4096);
     bridge_init();
 }
 void init_on_exit(State *s)  {  ESP_LOGI(s->name, "Exiting %s", s->name);   }

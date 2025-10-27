@@ -1,49 +1,25 @@
+/**
+ * File: states.h
+ * Description: Defines driving/steering functions to control wheels
+ * Author: arex7020
+ * Date: 2025-10-13
+ */
+
 #ifndef STATES_H
 #define STATES_H
 
 #include <stdio.h>
 #include "esp_log.h"
 #include "gatt-nimble/bluetooth_gatt_server.h"
+#include "motor_control/drive.h"
+#include "state_machine/events.h"
 
-/* LOG State tag */
-static const char *STATE_TAG = "STATE";
-/* LOG Event tag */
-static const char *EVENT_TAG = "EVENT";
 
 struct State;
 
-/* Event typedef used for the onevent function to handle commands from BLE */
-typedef enum {
-    // INIT Events, all these events need to trigger before leaving init
-    E_GATT_RDY,
-    E_SPEAK_RDY,
-    E_DAC_RDY,
-    E_USS_RDY,
-    E_MOTOR_RDY,
-    // IDLE Events
-    E_GATT_CON,
-    E_START,
-    // MAN Events
-    E_IDLE,
-    E_FORWARD,
-    E_REVERSE,
-    E_LEFT,
-    E_RIGHT,
-    E_AUTO_SELECT,
-    E_SPEAK1,
-    E_SPEAK2,
-    E_SPEAK3,
-    E_SPEAK4,
-    // AUTO Events
-    E_COL_DETECTED,
-    // COL Events
-    E_COL_CLEARED
-
-} Event;
-
 
 /* NOTE:
-*  To call change_state and trigger_event, other files dont need to
+*  To call change_state and event_trigger, other files dont need to
 *  know about these 3 typedefs. maybe move them into seperate header in the future. 
 */
 
@@ -71,8 +47,7 @@ extern State S_AUTO;
 extern State S_COL;
 extern State S_MAN;
 
-/* functions to trigger events and change the state */
+/* functions to change the state */
 void change_state(State *new_state);
-void trigger_event(Event e);
 
 #endif // STATES_H

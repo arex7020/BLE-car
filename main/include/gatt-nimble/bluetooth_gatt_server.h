@@ -30,7 +30,7 @@
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
 
-#include "state_machine/states.h"
+#include "state_machine/events.h"
 
 /* Defines */
 #define TAG "GATT"

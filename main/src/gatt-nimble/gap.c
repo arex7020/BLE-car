@@ -240,6 +240,8 @@ static int gap_event_handler(struct ble_gap_event *event, void *arg) {
 
         /* GATT subscribe event callback */
         gatt_svr_subscribe_cb(event);
+        /* Send event when connected */
+        event_trigger(E_GATT_CON);
         return rc;
 
     /* MTU update event */

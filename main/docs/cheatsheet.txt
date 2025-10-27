@@ -13,7 +13,7 @@ git add .
 
 git commit -m "commit message" puts changes on local branch
 
-git push -u origin <target>    push local branch changes to remote branch
+git push -u origin <target> example: git push -u origin 03-motor-control  push local branch changes to remote branch
 
 -u makes it upstream, so u can only do git push, or git pull after
 

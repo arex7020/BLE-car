@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
 /* Includes */
-#include "gatt-nimble/bluetooth_gatt_server.h"
-#include "gatt-nimble/heart_rate.h"
+#include "gatt_nimble/bluetooth_gatt_server.h"
+#include "gatt_nimble/heart_rate.h"
 
 /* Private variables */
 static uint8_t heart_rate;

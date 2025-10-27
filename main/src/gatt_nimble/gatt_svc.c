@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
 /* Includes */
-#include "gatt-nimble/gatt_svc.h"
-#include "gatt-nimble/bluetooth_gatt_server.h"
-#include "gatt-nimble/heart_rate.h"
+#include "gatt_nimble/gatt_svc.h"
+#include "gatt_nimble/bluetooth_gatt_server.h"
+#include "gatt_nimble/heart_rate.h"
 
 /* Private function declarations */
 static int heart_rate_chr_access(uint16_t conn_handle, uint16_t attr_handle,

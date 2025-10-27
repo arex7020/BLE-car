@@ -4,9 +4,9 @@
  * SPDX-License-Identifier: Unlicense OR CC0-1.0
  */
 /* Includes */
-#include "gatt-nimble/gap.h"
-#include "gatt-nimble/bluetooth_gatt_server.h"
-#include "gatt-nimble/gatt_svc.h"
+#include "gatt_nimble/gap.h"
+#include "gatt_nimble/bluetooth_gatt_server.h"
+#include "gatt_nimble/gatt_svc.h"
 
 /* Private function declarations */
 inline static void format_addr(char *addr_str, uint8_t addr[]);

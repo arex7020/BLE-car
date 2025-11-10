@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include "esp_log.h"
-#include "gatt_nimble/bluetooth_gatt_server.h"
+#include "gatt-nimble/bluetooth_gatt_server.h"
 #include "motor_control/drive.h"
 #include "state_machine/events.h"
 

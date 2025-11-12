@@ -2,7 +2,7 @@
 
 #define SPEED_OF_SOUND 343.0f
 
-/* Interrupt handler for ECHO PIN */
+/* Interrupt handler for ECHO PIN, saves distance in meters to hcsr_distance*/
 void IRAM_ATTR echo_isr_handler(void *arg) {
 
     int64_t now = esp_timer_get_time();
@@ -36,7 +36,7 @@ void hcsr_init(void) {
 
 }
 
-/*  */
+/* trigger sensor read */
 void hcsr_trigger(void) {
     gpio_set_level(TRIG_PIN, 1);
     //put this in xtask cus esp_rom_delay literally pauses the whole cpu

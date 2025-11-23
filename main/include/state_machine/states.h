@@ -10,9 +10,10 @@
 
 #include <stdio.h>
 #include "esp_log.h"
-#include "gatt-nimble/bluetooth_gatt_server.h"
+#include "gatt_nimble/bluetooth_gatt_server.h"
 #include "motor_control/drive.h"
 #include "state_machine/events.h"
+#include "collision_avoidance/ultrasound.h"
 
 
 struct State;

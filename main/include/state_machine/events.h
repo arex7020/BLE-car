@@ -9,7 +9,7 @@ typedef enum {
     E_BRIDGE_RDY,
     E_SPEAKER_RDY,
     E_DAC_RDY,
-    E_USS_RDY,
+    E_HCSR_RDY,
     // IDLE Events
     E_GATT_CON,
     E_START,

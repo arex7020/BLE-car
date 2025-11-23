@@ -42,13 +42,13 @@ void init_on_event(State *s, Event e)
     static bool e_gatt_rdy = false;
     static bool e_pwm_rdy = false;
     static bool e_bridge_rdy = false;
-    static bool e_uss_rdy = false;
+    static bool e_hcsr_rdy = false;
     static bool e_dac_rdy = false;
     static bool e_speak_rdy = false;
 
 
     /* NOT YET IMPLEMENTED, SET TO TRUE FOR TESTING */
-    e_uss_rdy = true;
+    
     e_dac_rdy = true;
     e_speak_rdy = true;
 
@@ -66,8 +66,8 @@ void init_on_event(State *s, Event e)
         e_bridge_rdy = true;
         ESP_LOGI(s->name, "BRIDGE READY");
         break;
-    case E_USS_RDY:
-        e_uss_rdy = true;
+    case E_HCSR_RDY:
+        e_hcsr_rdy = true;
         ESP_LOGI(s->name, "DISTANCE SENSOR READY");
         break;
     case E_DAC_RDY:
@@ -84,7 +84,7 @@ void init_on_event(State *s, Event e)
     }
 
     // check if ready to change state to idle
-    if (e_gatt_rdy && e_pwm_rdy && e_bridge_rdy && e_uss_rdy && e_dac_rdy && e_speak_rdy) {
+    if (e_gatt_rdy && e_pwm_rdy && e_bridge_rdy && e_hcsr_rdy && e_dac_rdy && e_speak_rdy) {
         change_state(&S_IDLE);
     }
 
@@ -183,7 +183,11 @@ void man_on_event(State *s, Event e)
     }
 }
 
-void auto_on_enter(State *s) {  ESP_LOGI(s->name, "Entering %s", s->name);  }
+void auto_on_enter(State *s) 
+{
+    ESP_LOGI(s->name, "Entering %s", s->name);  
+    xTaskCreate(hcsr_trigger, "HcsrTrig", 4096, NULL, 5, NULL);
+}
 void auto_on_exit(State *s)  {  ESP_LOGI(s->name, "Exiting %s", s->name);  }
 void auto_on_event(State *s, Event e)
 {  

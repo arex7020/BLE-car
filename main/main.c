@@ -16,7 +16,7 @@ void main_task(){
 
 void app_main(void)
 {
-    xTaskCreate(main_task, "MainTask", 4096, NULL, 5, NULL);
+    xTaskCreate(main_task, "MainTask", 4096, NULL, 10, NULL);
     
 }
 
